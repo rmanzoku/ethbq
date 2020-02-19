@@ -14,24 +14,31 @@ const (
 )
 
 type Transaction struct {
-	Hash                     string    `bigquery:"hash"`
-	Nonce                    int64     `bigquery:"nonce"`
-	TransactionIndex         int64     `bigquery:"transaction_index"`
-	FromAddress              string    `bigquery:"from_address"`
-	ToAddress                string    `bigquery:"to_address"`
-	Value                    *big.Rat  `bigquery:"value"`
-	Gas                      int64     `bigquery:"gas"`
-	GasPrice                 int64     `bigquery:"gas_price"`
-	Input                    string    `bigquery:"input"`
-	ReceiptCumulativeGasUsed int64     `bigquery:"receipt_cumulative_gas_used"`
-	ReceiptGasUsed           int64     `bigquery:"receipt_gas_used"`
-	ReceiptContractAddress   string    `bigquery:"receipt_contract_address"`
-	ReceiptRoot              string    `bigquery:"receipt_root"`
-	ReceiptStatus            int64     `bigquery:"receipt_status"`
-	BlockTimestamp           time.Time `bigquery:"block_timestamp"`
-	BlockNumber              int64     `bigquery:"block_number"`
-	BlockHash                string    `bigquery:"block_hash"`
+	Hash                     string        `bigquery:"hash"`
+	Nonce                    int64         `bigquery:"nonce"`
+	TransactionIndex         int64         `bigquery:"transaction_index"`
+	FromAddress              string        `bigquery:"from_address"`
+	ToAddress                string        `bigquery:"to_address"`
+	Value                    *big.Rat      `bigquery:"value"`
+	Gas                      int64         `bigquery:"gas"`
+	GasPrice                 int64         `bigquery:"gas_price"`
+	Input                    string        `bigquery:"input"`
+	ReceiptCumulativeGasUsed int64         `bigquery:"receipt_cumulative_gas_used"`
+	ReceiptGasUsed           int64         `bigquery:"receipt_gas_used"`
+	ReceiptContractAddress   string        `bigquery:"receipt_contract_address"`
+	ReceiptRoot              string        `bigquery:"receipt_root"`
+	ReceiptStatus            ReceiptStatus `bigquery:"receipt_status"`
+	BlockTimestamp           time.Time     `bigquery:"block_timestamp"`
+	BlockNumber              int64         `bigquery:"block_number"`
+	BlockHash                string        `bigquery:"block_hash"`
 }
+
+type ReceiptStatus int8
+
+const (
+	Success ReceiptStatus = iota
+	Failure
+)
 
 func UnmarhalTransactions(it *bigquery.RowIterator, dst *[]*Transaction) (err error) {
 	tmp := make([]*Transaction, it.TotalRows)
