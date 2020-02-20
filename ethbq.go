@@ -44,7 +44,7 @@ func (t Transaction) Success() bool {
 	return t.ReceiptStatus == Success
 }
 
-func UnmarhalTransactions(it *bigquery.RowIterator, dst *[]*Transaction) (err error) {
+func UnmarshalTransactions(it *bigquery.RowIterator, dst *[]*Transaction) (err error) {
 	tmp := make([]*Transaction, it.TotalRows)
 	i := 0
 	for {
