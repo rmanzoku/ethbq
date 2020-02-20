@@ -36,8 +36,8 @@ type Transaction struct {
 type ReceiptStatus int8
 
 const (
-	Success ReceiptStatus = iota
-	Failure
+	Failure ReceiptStatus = iota
+	Success
 )
 
 func (t Transaction) Success() bool {
